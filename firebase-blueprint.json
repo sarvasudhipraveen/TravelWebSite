@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information and preferences",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "walletBalance": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Booking": {
+      "title": "Travel Booking",
+      "description": "Details of a flight, hotel, train, or bus booking",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["flight", "hotel", "train", "bus", "cab"] },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled", "completed"] },
+        "details": { "type": "object" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "bookingDate": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "type", "status", "amount"]
+    },
+    "WishlistItem": {
+      "title": "Wishlist Item",
+      "description": "Saved destination or package",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "itemId": { "type": "string" },
+        "itemType": { "type": "string" },
+        "savedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "itemId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "All travel bookings"
+    },
+    "/wishlists/{wishlistId}": {
+      "schema": "WishlistItem",
+      "description": "User wishlists"
+    }
+  }
+}
